@@ -25,4 +25,5 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.projectsend.entrypoints: web
+      traefik.http.routers.projectsend.rule: Host(`127.0.0.1`)
       traefik.http.services.projectsend.loadbalancer.server.port: 80

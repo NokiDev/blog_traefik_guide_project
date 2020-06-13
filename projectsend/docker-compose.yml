@@ -1,0 +1,28 @@
+version: "3.7"
+
+networks:
+  proxy:
+    external: true
+
+services:
+  projectsend:
+    image: linuxserver/projectsend
+    restart: unless-stopped
+    container_name: projectsend
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Paris
+      MAX_UPLOAD: 5000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # Sharing time with host OS as read only (ro).
+      - ./config:/config
+      - ./data:/data
+    ports:
+      - 9999:80
+    networks:
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.http.routers.projectsend.entrypoints: web
+      traefik.http.services.projectsend.loadbalancer.server.port: 80

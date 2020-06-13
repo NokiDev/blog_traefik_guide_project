@@ -1,0 +1,22 @@
+version: '3.7'
+
+networks:
+  proxy:
+    external: true
+
+services:
+  traefik:
+    image: traefik:v2.2.1
+    restart: unless-stopped
+    container_name: traefik
+    ports:
+      - 127.0.0.1:8888:80 # Change 127.0.0.1 by 0.0.0.0 if you try this in a VM / or distant server
+      - 127.0.0.1:8080:8080
+    environment:
+      TZ: "Europe/Paris" # Setting Timezone.
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Needed to allow traefik access docker api.
+      - /etc/localtime:/etc/localtime:ro # Sharing time with host OS as read only (ro).
+      - ./config.yml:/etc/traefik/traefik.yml
+    networks:
+      - proxy

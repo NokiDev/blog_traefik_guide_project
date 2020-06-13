@@ -1,0 +1,17 @@
+global:
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true ## Enable dashboard visulization on port 8080
+ping: {}
+
+
+providers:
+  docker:
+    network: proxy
+    watch: true
+    exposedByDefault: false
+
+entrypoints:
+  web: # This name is arbitrary you can name your entrypoint the way you want.
+    address: ':80'

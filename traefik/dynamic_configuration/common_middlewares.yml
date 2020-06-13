@@ -1,0 +1,27 @@
+http:
+  middlewares:
+    secured:
+      chain:
+        middlewares:
+          - https_redirect
+          - secured_headers
+
+    https_redirect:
+      redirectScheme:
+        permanent: true
+        scheme: https
+
+    secured_headers:
+      headers:
+        sslRedirect: true
+        sslHost: use_https_for_god_sake.domain.tld
+        sslProxyHeaders:
+          X-Forwarded-Proto: https
+        stsSeconds: 15552000
+        stsPreload: true
+        stsIncludeSubdomains: true
+        forceSTSHeader: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: 'origin-when-cross-origin'
+        customFrameOptionsValue: 'SAMEORIGIN'
